@@ -205,8 +205,40 @@ export default {
                 filename: '.env'
             }
         ],
-        'vue-sweetalert2/nuxt'
+        '@nuxtjs/toast',
+        'vue-sweetalert2/nuxt',
+        'nuxt-material-design-icons'
     ],
+    toast: {
+        position: 'top-center',
+        register: [ // Register custom toasts
+            {
+                name: 'cartadd',
+                message: (payload) => {
+                    if (!payload.message) return "Success"
+                    return payload.message
+                },
+                options: {
+                    position: 'top-right',
+                    duration: 2000,
+                    icon : 'shopping_cart'
+                }
+            },
+            {
+                name: 'cartremove',
+                message: (payload) => {
+                    if (!payload.message) return "Removed"
+                    return payload.message
+                },
+                options: {
+                    position: 'top-right',
+                    duration: 2000,
+                    icon : 'delete',
+                    type: 'error'
+                }
+            }
+        ]
+    },
     /*
      ** Axios module configuration
      ** See https://axios.nuxtjs.org/options

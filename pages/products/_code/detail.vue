@@ -587,6 +587,9 @@
 				this.product.qty = this.qty
 				this.$store.dispatch('cart/addItem', this.product)
 				this.qty = 1
+				this.$toast.global.cartadd({ 
+                	message: `Added &nbsp; <b>${this.product.nama } (x${this.product.qty})</b>` 
+            	})
 			},
 			next() {
 				this.$refs.slick.next();

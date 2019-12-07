@@ -39,7 +39,7 @@
             </div>
             <div class="count-star">(7)</div>
                     </div>-->
-                    <div class="price" v-if="product.harga_diskon > 0">
+                    <div class="price" v-if="product.harga_diskon > 0 && product.harga > product.harga_diskon">
                         <del>{{ product.harga | rupiah }}</del>
                         <ins>{{ product.harga_diskon | rupiah }}</ins>
                     </div>
@@ -112,10 +112,10 @@ export default {
             this.product.qty = this.qty
             this.$store.dispatch('cart/addItem', this.product)
             this.qty = 1
+            this.$toast.global.cartadd({ 
+                message: `Added &nbsp; <b>${this.product.nama } (x${this.product.qty})</b>` 
+            })
         }
     }
 }
 </script>
-
-<style>
-</style>
