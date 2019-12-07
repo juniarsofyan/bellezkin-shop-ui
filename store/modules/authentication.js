@@ -90,12 +90,6 @@ const authentication = {
                     commit('setIdToken', authResult.idToken)
                     commit('setExpiresAt', expiresAt)
 
-                    commit('setUserData', {
-                        name: authResult.idTokenPayload.name,
-                        email: authResult.idTokenPayload.email,
-                        picture: authResult.idTokenPayload.picture
-                    })
-
                     commit('setUserIsAuthenticated', true)
 
                     // check local profile, if not available then register
@@ -107,11 +101,24 @@ const authentication = {
                             axios.post(`${process.env.API_BASE_URL}profile/register`, {
                                 name: authResult.idTokenPayload.name.toUpperCase(),
                                 email: authResult.idTokenPayload.email
-                            }).then((response) => {
-                                console.log(response.data.data)
+                            }).then((response) => {            
+                                commit('setUserData', {
+                                    user_id: response.data.data.user_id,
+                                    name: authResult.idTokenPayload.name,
+                                    email: authResult.idTokenPayload.email,
+                                    picture: authResult.idTokenPayload.picture
+                                })
                             })
                             .catch(e => {
                                 console.log(e)
+                            })
+                        } else {
+
+                            commit('setUserData', {
+                                user_id: response.data.data.user_id,
+                                name: authResult.idTokenPayload.name,
+                                email: authResult.idTokenPayload.email,
+                                picture: authResult.idTokenPayload.picture
                             })
                         }
                     }).catch(e => {

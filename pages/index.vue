@@ -137,12 +137,12 @@ export default {
             }
         })
 
-        this.$axios.get(process.env.API_BASE_URL + 'products/product-codes').then((res) => {
+        /* this.$axios.get(process.env.API_BASE_URL + 'products/product-codes').then((res) => {
             let urls = res.data.data.map((product) => {
                 return `products/${product.kode_barang}/detail`
             })
             console.log(urls)
-        })
+        }) */
     }
 }
 </script>
