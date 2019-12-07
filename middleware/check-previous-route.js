@@ -6,8 +6,8 @@ export default function ({ app }) {
             next(false)
         } */
 
-        console.log('from')
+        /* console.log('from')
         console.log(from)
-        next()
+        next() */
     })
 }
