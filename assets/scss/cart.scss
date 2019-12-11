@@ -1,0 +1,85 @@
+.cart-item {
+    @media screen and (max-width: 48em) {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 16px;
+    }
+
+    .item-wrap {
+        @media screen and (max-width: 48em) {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+        }
+    }
+
+    .cart-product-info {
+        @media screen and (max-width: 48em) {
+            flex: 1;
+            justify-content: space-between;
+            display: flex;
+            flex-direction: column;
+            padding-top: 8px;
+            padding-bottom: 8px;
+
+            .title {
+                height: 40px;
+                font-weight: 600;
+                font-size: 14px;
+            }
+        }
+
+        .cart-info-wrap {
+            @media screen and (max-width: 48em) {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                .quantity {
+                    .control {
+                        display: flex;
+                        width: auto !important;
+                        max-width: 100% !important;
+
+                        .input-qty {
+                            height: 32px;
+                            width: auto !important;
+                        }
+
+                        .btn-number {
+                            height: auto;
+                            padding-right: 4px;
+                            padding-left: 4px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cart-total-checkout {
+    margin-top: 54px;
+    border-top: 1px #dedede solid;
+    padding-top: 24px;
+    @media screen and (max-width: 48em) {
+        .cart-total-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+
+            .cart-total-value {
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+.control-cart {
+    display: flex;
+
+    .button-checkout {
+        width: 100%;
+    }
+}

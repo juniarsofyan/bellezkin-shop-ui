@@ -35,67 +35,46 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <CartItem v-for="item in items" :key="item.product_code" :item="item" />
-                                            <tr>
-                                                <td class="actions">
-                                                    <!-- <div class="coupon">
-                                                        <label class="coupon_code">Coupon Code:</label>
-                                                        <div class="coupon-wrapp">
-                                                            <input
-                                                                type="text"
-                                                                class="input-text"
-                                                                placeholder="Promotion code here"
-                                                            />
-                                                            <a href="#" class="button"></a>
-                                                        </div>
-                                                    </div>-->
-                                                    <table style="width:0; border:none; float:right;">
-                                                        <tr >
-                                                            <td style="text-align:right !important">
-                                                                <span class="title"><h5><b>Total Price :</b></h5></span>
-                                                            </td>
-                                                            <td style="text-align:right !important">
-                                                                <span
-                                                                    class="total-price "><h4><b>{{ subtotal | rupiah }}</b></h4></span>
-                                                            </td>
-                                                        </tr>
-                                                        <!-- <tr >
-                                                            <td style="text-align:right !important">
-                                                                <span class="title"><h5><b>Save :</b></h5></span>
-                                                            </td>
-                                                            <td style="text-align:right !important">
-                                                                <span class="total-price"><h4><b>IDR 10.000</b></h4></span>
-                                                            </td>
-                                                        </tr> -->
-                                                        <tr>
-                                                            <td style="text-align:right !important">
-                                                                <span class="title"><h5><b>Grand Total :</b></h5></span>
-                                                            </td>
-                                                            <td style="text-align:right !important">
-                                                                <span
-                                                                    class="total-price"><h4><b>{{ subtotal | rupiah }}</b></h4></span>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    
-                                                </td>
-                                            </tr>
-                                           
-                                           
+                                            <CartItem
+                                                v-for="item in items"
+                                                :key="item.product_code"
+                                                :item="item"
+                                            />
+                                            <div class="cart-total-checkout">
+                                                <div class="cart-total-item">
+                                                    <div>Total Price</div>
+                                                    <div
+                                                        class="cart-total-value"
+                                                    >{{ subtotal | rupiah }}</div>
+                                                </div>
+                                                <div class="cart-total-item">
+                                                    <div>Grand Total</div>
+                                                    <div
+                                                        class="cart-total-value"
+                                                    >{{ subtotal | rupiah }}</div>
+                                                </div>
+                                            </div>
                                         </tbody>
                                     </table>
                                 </form>
                                 <div class="control-cart">
-                                    <nuxt-link :to="`/`" tag="button" class="button btn-continue-shopping">
-                                        CONTINUE SHOPPING
-                                    </nuxt-link>
+                                    <!-- <nuxt-link
+                                        :to="`/`"
+                                        tag="button"
+                                        class="button btn-continue-shopping"
+                                    >CONTINUE SHOPPING</nuxt-link>-->
 
-                                    <button v-if="!userIsAuthorized" @click="warnSignIn" class="button btn-cart-to-checkout">
-                                        CHECKOUT NOW
-                                    </button>
-                                    <nuxt-link v-else :to="`/checkout`" tag="button" class="button btn-cart-to-checkout">
-                                        CHECKOUT NOW
-                                    </nuxt-link>
+                                    <button
+                                        v-if="!userIsAuthorized"
+                                        @click="warnSignIn"
+                                        class="button button-checkout btn-cart-to-checkout"
+                                    >CHECKOUT NOW</button>
+                                    <nuxt-link
+                                        v-else
+                                        :to="`/checkout`"
+                                        tag="button"
+                                        class="button button-checkout btn-cart-to-checkout"
+                                    >CHECKOUT NOW</nuxt-link>
                                 </div>
                             </div>
                         </div>
@@ -118,26 +97,25 @@ export default {
         CartItem
     },
     computed: {
-        ...mapGetters("authentication", ['userIsAuthorized']),
-        items: function () {
+        ...mapGetters('authentication', ['userIsAuthorized']),
+        items: function() {
             return this.$store.getters['cart/items']
         },
-        subtotal: function () {
+        subtotal: function() {
             return this.$store.getters['cart/subtotal']
         }
     },
     methods: {
         warnSignIn() {
             this.$swal({
-                title: "Oops!",
-                text: "Please sign in to continue",
-                type: "warning",
+                title: 'Oops!',
+                text: 'Please sign in to continue',
+                type: 'warning'
             }).then(() => {
-                this.$store.dispatch("authentication/auth0Login")
+                this.$store.dispatch('authentication/auth0Login')
             })
         }
     }
-        
 }
 </script>
 

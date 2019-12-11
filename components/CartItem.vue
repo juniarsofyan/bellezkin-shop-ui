@@ -1,64 +1,42 @@
 <template>
-    <tr class="cart_item">
-        <td class="product-thumbnail">
-            <a href="#">
+    <div class="cart-item">
+        <div class="item-wrap">
+            <div class="cart-thumbnail">
                 <img
                     :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${item.picture}.jpg`"
                     :alt="item.product_name"
-                    class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
+                    width="80"
+                    style="border-radius: 6px;margin-right: 12px;"
                 />
-            </a>
-        </td>
-        <td class="product-name" data-title="Product">
-            <nuxt-link
-                :to="`/products/${item.product_code}/detail`"
-                tag="a"
-                class="title"
-            >{{ item.product_name }}</nuxt-link>
-            <span class="attributes-select attributes-color">{{ item.price | rupiah }}</span>
-            <!-- <span class="attributes-select attributes-size">, XS</span> -->
-        </td>
-        <td class="product-quantity" data-title="Quantity">
-            <div class="quantity">
-                <div class="control">
-                    <span class="btn-number qtyminus quantity-minus" @click="minQty">-</span>
-                    <input
-                        type="text"
-                        data-step="1"
-                        min="1"
-                        v-model="qty"
-                        title="Qty"
-                        class="input-qty qty"
-                        size="4"
-                        @input="updateQty"
-                    />
-                    <span class="btn-number qtyplus quantity-plus" @click="addQty">+</span>
+            </div>
+            <div class="cart-product-info">
+                <nuxt-link
+                    :to="`/products/${item.product_code}/detail`"
+                    tag="a"
+                    class="title"
+                >{{ item.product_name }}</nuxt-link>
+                <div class="cart-info-wrap">
+                    <div class="attributes-select attributes-color">{{ item.price | rupiah }}</div>
+                    <div class="quantity">
+                        <div class="control">
+                            <div class="btn-number qtyminus quantity-minus" @click="minQty">-</div>
+                            <input
+                                type="text"
+                                data-step="1"
+                                min="1"
+                                v-model="qty"
+                                title="Qty"
+                                class="input-qty qty"
+                                size="4"
+                                @input="updateQty"
+                            />
+                            <div class="btn-number qtyplus quantity-plus" @click="addQty">+</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </td>
-        <td class="product-price" data-title="Price">
-            <!-- <span class="woocommerce-Price-amount">
-                <span class="woocommerce-Price-currencySymbol">Disc</span>
-                45%
-            </span>-->
-        </td>
-        <td class="product-price" data-title="Price">
-            <span class="woocommerce-Price-amount amount">
-                <span class="woocommerce-Price-currencySymbol">
-                    <sub>
-                        <!-- <strike>Rp. 232312</strike> -->
-                        <strike>
-                            <br />
-                        </strike>
-                    </sub>
-                </span>
-                <p>{{ item.subtotal | rupiah }}</p>
-            </span>
-        </td>
-        <td class="product-remove">
-            <a class="remove" @click="removeItem"></a>
-        </td>
-    </tr>
+        </div>
+    </div>
 </template>
 
 <script>
