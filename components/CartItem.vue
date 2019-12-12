@@ -5,8 +5,7 @@
                 <img
                     :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${item.picture}.jpg`"
                     :alt="item.product_name"
-                    width="80"
-                    style="border-radius: 6px;margin-right: 12px;"
+                    class="img-thumbnail"
                 />
             </div>
             <div class="cart-product-info">
@@ -15,8 +14,8 @@
                     tag="a"
                     class="title"
                 >{{ item.product_name }}</nuxt-link>
+                <div class="cart-product-price">{{ item.price | rupiah }}</div>
                 <div class="cart-info-wrap">
-                    <div class="attributes-select attributes-color">{{ item.price | rupiah }}</div>
                     <div class="quantity">
                         <div class="control">
                             <div class="btn-number qtyminus quantity-minus" @click="minQty">-</div>
@@ -32,6 +31,9 @@
                             />
                             <div class="btn-number qtyplus quantity-plus" @click="addQty">+</div>
                         </div>
+                    </div>
+                    <div class="product-remove">
+                        <a class="remove" @click="removeItem"></a>
                     </div>
                 </div>
             </div>
