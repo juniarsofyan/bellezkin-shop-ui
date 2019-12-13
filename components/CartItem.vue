@@ -14,22 +14,27 @@
                     tag="a"
                     class="title"
                 >{{ item.product_name }}</nuxt-link>
-                <div class="cart-product-price">{{ item.price | rupiah }}</div>
                 <div class="cart-info-wrap">
-                    <div class="quantity">
-                        <div class="control">
-                            <div class="btn-number qtyminus quantity-minus" @click="minQty">-</div>
-                            <input
-                                type="text"
-                                data-step="1"
-                                min="1"
-                                v-model="qty"
-                                title="Qty"
-                                class="input-qty qty"
-                                size="4"
-                                @input="updateQty"
-                            />
-                            <div class="btn-number qtyplus quantity-plus" @click="addQty">+</div>
+                    <div class="flex-cart-item">
+                        <div>
+                            <div class="cart-product-price-disc">{{ item.price | rupiah }}</div>
+                            <div class="cart-product-price">{{ item.price | rupiah }}</div>
+                        </div>
+                        <div class="quantity">
+                            <div class="control">
+                                <div class="btn-number qtyminus quantity-minus" @click="minQty">-</div>
+                                <input
+                                    type="text"
+                                    data-step="1"
+                                    min="1"
+                                    v-model="qty"
+                                    title="Qty"
+                                    class="input-qty qty"
+                                    size="4"
+                                    @input="updateQty"
+                                />
+                                <div class="btn-number qtyplus quantity-plus" @click="addQty">+</div>
+                            </div>
                         </div>
                     </div>
                     <div class="product-remove">
