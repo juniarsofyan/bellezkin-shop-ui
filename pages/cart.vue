@@ -76,13 +76,18 @@
                                             class="button btn-continue-shopping"
                                             >CONTINUE SHOPPING</nuxt-link>-->
 
-                                            <button
+                                            <!-- <button
                                                 v-if="!userIsAuthorized"
                                                 @click="warnSignIn"
                                                 class="button button-checkout btn-cart-to-checkout"
                                             >CHECKOUT NOW</button>
                                             <nuxt-link
                                                 v-else
+                                                :to="`/checkout`"
+                                                tag="button"
+                                                class="button button-checkout btn-cart-to-checkout"
+                                            >CHECKOUT NOW</nuxt-link>-->
+                                            <nuxt-link
                                                 :to="`/checkout`"
                                                 tag="button"
                                                 class="button button-checkout btn-cart-to-checkout"

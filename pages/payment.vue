@@ -134,7 +134,7 @@
 import { mapGetters, mapActions } from 'vuex'
 	
 export default {
-    middleware: ['traffics'],
+    // middleware: ['traffics'],
     layout: 'products',
 	data() {
 		return {
