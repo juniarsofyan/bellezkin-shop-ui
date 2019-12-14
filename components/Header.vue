@@ -172,7 +172,7 @@
                                     </a>
                                     <div class="header-account turan-submenu">
                                         <div class="header-user-form-tabs" v-if="!userIsAuthorized">
-                                            <ul class="tab-link">
+                                            <!-- <ul class="tab-link">
                                                 <li class="active">
                                                     <a
                                                         data-toggle="tab"
@@ -180,68 +180,63 @@
                                                         href="#header-tab-login"
                                                     >You have not login</a>
                                                 </li>
-                                            </ul>
+                                            </ul>-->
                                             <div class="tab-container" style="padding: 20px 20px;">
-                                                <div id="header-tab-login" class="tab-panel active">
+                                                <div
+                                                    id="header-tab-login"
+                                                    class="tab-panel active text-center"
+                                                >
                                                     <input
                                                         type="button"
                                                         class="button"
                                                         value="Login"
                                                         @click="auth0Login()"
                                                     />
+                                                    <button
+                                                        class="button btn-outline"
+                                                        @click="auth0Login()"
+                                                    >Register</button>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="header-user-form-tabs" v-else>
-                                            <!-- <center>
-                                                <img :src="user_data.picture" style="width: 150px; height: 150px;margin-top:10px;object-fit: cover; border-radius: 50%;padding: 10px;">
-                                                  <br>  {{ user_data.name }}
-                                            </center>-->
-                                            <ul class="tab-link">
-                                                <nuxt-link to="/profile" tag="li" class="active">
+                                            <ul class="submenu submenu-profile">
+                                                <li class="menu-item">
+                                                    <nuxt-link
+                                                        to="/profile"
+                                                        tag="li"
+                                                        class="active"
+                                                    >
+                                                        <a
+                                                            data-toggle="tab"
+                                                            aria-expanded="true"
+                                                            href="#header-tab-login"
+                                                        >
+                                                            <i class="fa fa-user-o"></i> Profile
+                                                        </a>
+                                                    </nuxt-link>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <nuxt-link
+                                                        to="/order-history"
+                                                        tag="li"
+                                                        class="active"
+                                                    >
+                                                        <a>
+                                                            <i class="fa fa-shopping-bag"></i> Orders
+                                                        </a>
+                                                    </nuxt-link>
+                                                </li>
+                                                <li class="menu-item">
                                                     <a
                                                         data-toggle="tab"
                                                         aria-expanded="true"
                                                         href="#header-tab-login"
+                                                        @click="auth0Logout"
                                                     >
-                                                        <input
-                                                            type="button"
-                                                            class="button btn-xs"
-                                                            value="Profile"
-                                                        />
-                                                    </a>
-                                                </nuxt-link>
-                                                <li
-                                                    class="active"
-                                                    style="position: absolute;right: 0;"
-                                                >
-                                                    <a
-                                                        data-toggle="tab"
-                                                        aria-expanded="true"
-                                                        href="#header-tab-login"
-                                                    >
-                                                        <input
-                                                            type="button"
-                                                            class="button btn-xs"
-                                                            value="Logout"
-                                                            @click="auth0Logout"
-                                                        />
+                                                        <i class="fa fa-sign-out"></i>Logout
                                                     </a>
                                                 </li>
-                                                <br />
-                                                <br />
-
-                                                <nuxt-link
-                                                    to="/order-history"
-                                                    tag="li"
-                                                    class="active"
-                                                >
-                                                    <input
-                                                        type="button"
-                                                        class="button btn-xs"
-                                                        value="Orders"
-                                                    />
-                                                </nuxt-link>
                                             </ul>
                                         </div>
                                     </div>
@@ -355,3 +350,40 @@ export default {
     }
 }
 </script>
+
+<style lang="css">
+.btn-outline {
+    background: transparent;
+    border: 2px solid #e9e9e9;
+    color: #333333;
+    font-weight: 700;
+    vertical-align: middle;
+    height: 43px;
+    padding: 0 20px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.submenu-profile {
+    padding-left: 0px;
+}
+
+.menu-item {
+    list-style: none;
+    position: relative;
+}
+
+.submenu > li a {
+    display: block;
+    padding: 11px 20px;
+    color: #555555;
+}
+
+.submenu > li a > i {
+    padding-right: 6px;
+}
+
+.submenu > li:hover {
+    background-color: #f1f1f1;
+}
+</style>
