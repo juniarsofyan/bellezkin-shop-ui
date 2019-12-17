@@ -40,8 +40,6 @@
                         />
                     </template>
                 </ul>
-
-                <!--shop title-->
                 <nuxt-link to="/products/decorative" tag="h3" class="custom_blog_title">
                     <a href="#">#Decorative</a>
                 </nuxt-link>
