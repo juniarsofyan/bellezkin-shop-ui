@@ -524,7 +524,7 @@ export default {
                     {
                         breakpoint: 2561,
                         settings: {
-                            slidesToShow: 3,
+                            slidesToShow: 4,
                             slidesToScroll: 1
                         }
                     },
