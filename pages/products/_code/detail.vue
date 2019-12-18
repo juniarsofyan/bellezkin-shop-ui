@@ -455,6 +455,18 @@
                                                 class="product-inner equal-element"
                                                 style="border-radius: 6px;border:none;"
                                             >
+                                                <div class="product-top">
+                                                    <div class="flash">
+                                                        <span class="onnew">
+                                                            <span class="text">new</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="yith-wcwl-add-to-wishlist">
+                                                        <div class="yith-wcwl-add-button">
+                                                            <a href="#" tabindex="0">Add to Wishlist</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="product-thumb">
                                                     <div class="thumb-inner">
                                                         <a href="#">
@@ -469,15 +481,28 @@
                                                 <div class="text-center">
                                                     <h5
                                                         class="product-name product_title"
-                                                        style="height: 44px; overflow: hidden;"
+                                                        style="height: 44px; overflow: hidden;margin-bottom: 14px;"
                                                     >
                                                         <a href="#">{{ product.nama }}</a>
                                                     </h5>
                                                     <div class="group-info">
-                                                        <div class="price">
-                                                            <!-- <del>€65</del> -->
-                                                            <ins>{{ product.harga | rupiah }}</ins>
+                                                        <div
+                                                            class="price text-center"
+                                                            style="display:flex;flex-direction:column"
+                                                        >
+                                                            <ins
+                                                                style="margin-bottom: 8px"
+                                                            >{{ product.harga | rupiah }}</ins>
+                                                            <del
+                                                                style="margin-right: 0px;"
+                                                            >{{ product.harga | rupiah }}</del>
                                                         </div>
+                                                    </div>
+                                                    <div class="button-view-product">
+                                                        <button
+                                                            class="single_add_to_cart_button button"
+                                                            tabindex="0"
+                                                        >View Product</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -623,7 +648,7 @@ export default {
                 )
                 .then((response) => {
                     if (response.data.data != 0) {
-                        this.related_products = response.data.data.slice(0, 3)
+                        this.related_products = response.data.data.slice(0, 1)
                         // this.complete = true;
                         this.reInit()
                     }
