@@ -524,35 +524,35 @@ export default {
                     {
                         breakpoint: 2561,
                         settings: {
-                            slidesToShow: 3,
+                            slidesToShow: 4,
                             slidesToScroll: 1
                         }
                     },
                     {
                         breakpoint: 1441,
                         settings: {
-                            slidesToShow: 3,
+                            slidesToShow: 4,
                             slidesToScroll: 1
                         }
                     },
                     {
                         breakpoint: 1154,
                         settings: {
-                            slidesToShow: 3,
+                            slidesToShow: 4,
                             slidesToScroll: 1
                         }
                     },
                     {
                         breakpoint: 1025,
                         settings: {
-                            slidesToShow: 3,
+                            slidesToShow: 4,
                             slidesToScroll: 1
                         }
                     },
                     {
                         breakpoint: 769,
                         settings: {
-                            slidesToShow: 3,
+                            slidesToShow: 4,
                             slidesToScroll: 1
                         }
                     },
