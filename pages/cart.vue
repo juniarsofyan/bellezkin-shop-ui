@@ -43,7 +43,7 @@
                                     />
                                 </div>
                                 <div class="col-md-4 col-sm-12">
-                                    <div class="coupon">
+                                    <!-- <div class="coupon">
                                         <label class="coupon_code">Coupon Code:</label>
                                         <div class="coupon-wrapp">
                                             <input
@@ -53,7 +53,7 @@
                                             />
                                             <a href="#" class="button"></a>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="cart-wrap-summary">
                                         <div class="cart-total-checkout">
                                             <div class="cart-total-item">

@@ -53,13 +53,6 @@
                         </div>
                     </div>
 
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <b>SPB:</b>
-                                <br />Bandung, Lengkong
-                            </div>
-
 					<div class="col-md-8">
 						<div class="row">
 							<div class="col-md-4">
@@ -86,11 +79,9 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
-				<hr>
+				<hr />
 			</div>
-
 		</li>
 	</ul>
 </template>

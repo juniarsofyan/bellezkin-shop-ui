@@ -346,6 +346,8 @@ export default {
         },
         auth0Logout() {
             this.$store.dispatch('authentication/auth0Logout')
+            this.$store.dispatch('checkout/reset')
+            this.$store.dispatch('cart/reset')
         }
     }
 }
