@@ -467,7 +467,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="text-center">
-                                                    <h5 class="product-name product_title">
+                                                    <h5
+                                                        class="product-name product_title"
+                                                        style="height: 44px; overflow: hidden;"
+                                                    >
                                                         <a href="#">{{ product.nama }}</a>
                                                     </h5>
                                                     <div class="group-info">
