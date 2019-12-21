@@ -1,8 +1,7 @@
 <template>
     <div>
         <div
-            class="card"
-            style="border-radius:5px;margin-top:3rem"
+            class="list-order-history"
             v-for="order in order_histories"
             :key="order.transaction.transaksi_id"
         >
@@ -21,10 +20,9 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in order.items" :key="item.kode_barang">
-                                <td>
+                                <td class="item-order">
                                     <img
                                         :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${item.pic}.jpg`"
-                                        width="60"
                                     />
                                     {{ item.nama }}
                                 </td>
@@ -62,7 +60,7 @@
                             </tr>
                         </tfoot>
                     </table>
-                    <div class="row" style="    display: flex;">
+                    <div class="row section-desc-order">
                         <div class="col-md-9">
                             <b>Ship to:</b>
                             <br />
