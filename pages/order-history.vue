@@ -1,103 +1,176 @@
 <template>
-    <ul class="row list-products auto-clear equal-container product-list">
-        <li
-            class="product-item style-list col-lg-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-ts-12"
+    <div>
+        <div
+            class="card"
+            style="border-radius:5px;margin-top:3rem"
+            v-for="order in order_histories"
+            :key="order.transaction.transaksi_id"
         >
-            <div
-                class="card"
-                style="border-radius:5px;"
-                v-for="order in order_histories"
-                :key="order.transaction.transaksi_id"
-            >
-                <br />
-                <br />
-
-                <div class="row">
-                    <div class="col-md-10">
-                        <b>Order number: {{ order.transaction.nomor_transaksi }}</b>
-                    </div>
-                    <div class="col-md-2">
-                        <button
-                            class="btn btn-success"
-                            v-if="!hasbeenTransferred(order.progresses)"
-                            @click="confirmPayment(order.transaction.transaksi_id, order.transaction.nomor_transaksi)"
-                        >Confirm payment</button>
-                        <button
-                            class="btn btn-danger"
-                            v-if="!hasShipped(order.progresses)"
-                            @click="deleteTransaction(order.transaction.transaksi_id)"
-                        >Cancel Transaction</button>
-                    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4># {{ order.transaction.nomor_transaksi }}</h4>
                 </div>
+                <div class="col-md-9">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in order.items" :key="item.kode_barang">
+                                <td>
+                                    <img
+                                        :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${item.pic}.jpg`"
+                                        width="60"
+                                    />
+                                    {{ item.nama }}
+                                </td>
+                                <td>{{ item.qty }}x</td>
+                                <td>IDR 800.000</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <!-- <tr>
+                                <td></td>
+                            </tr>-->
+                            <tr>
+                                <td colspan="2" align="right">
+                                    <b>Subtotal</b>
+                                </td>
+                                <td>
+                                    <b>{{ order.transaction.grand_total | rupiah }}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="right">
+                                    <b>Unique Code</b>
+                                </td>
+                                <td>
+                                    <b>{{ order.transaction.kode_unik_transfer | rupiah }}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="right">
+                                    <b>Grand total</b>
+                                </td>
+                                <td>
+                                    <b>{{ order.transaction.grand_total | rupiah }}</b>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="row" style="    display: flex;">
+                        <div class="col-md-9">
+                            <b>Ship to:</b>
+                            <br />
+                            <u>{{ order.transaction.nama }}</u>
+                            <br />
+                            {{ order.transaction.alamat }}
+                            <br />
+                            {{ order.transaction.provinsi_nama }}, {{ order.transaction.kota_nama }} Kec. {{ order.transaction.kecamatan_nama }}
+                            <br />
+                            {{ order.transaction.kode_pos }}
+                            <br />
+                        </div>
 
-                <OrderBreadcrumb :progresses="order.progresses" />
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="row" v-for="item in order.items" :key="item.kode_barang">
-                            <div class="col-md-6">
-                                <img
-                                    :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${item.pic}.jpg`"
-                                />
+                        <div
+                            class="col-md-3 text-right"
+                            style="display: flex;
+                                    flex-direction: column;
+                                    justify-content: space-between;"
+                        >
+                            <div>
+                                <button
+                                    class="btn btn-link"
+                                    v-if="!hasShipped(order.progresses)"
+                                    @click="deleteTransaction(order.transaction.transaksi_id)"
+                                >Cancel Order</button>
                             </div>
-
-                            <div class="col-md-6">
-                                <b>Description</b>
-                                <br />
-                                Item : {{ item.nama }}
-                                <br />
-                                Code: {{ item.kode_barang }}
-                                <br />
-                                Qty : {{ item.qty }}
-                            </div>
+                            <button
+                                class="btn btn-success"
+                                v-if="!hasbeenTransferred(order.progresses)"
+                                @click="confirmPayment(order.transaction.transaksi_id, order.transaction.nomor_transaksi)"
+                            >Confirm payment</button>
                         </div>
                     </div>
-
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <b>SPB:</b>
-                                <br />Bandung, Lengkong
+                </div>
+                <div class="col-md-3">
+                    <section class="root">
+                        <!-- <figure>
+                            <figcaption>
+                                <h5>Tracking Details</h5>
+                                <h6>Order Number</h6>
+                                <h4># {{ order.transaction.nomor_transaksi }}</h4>
+                            </figcaption>
+                        </figure>-->
+                        <div class="order-track">
+                            <div class="order-track-step disabled">
+                                <div class="order-track-status">
+                                    <span class="order-track-status-dot"></span>
+                                    <span class="order-track-status-line"></span>
+                                </div>
+                                <div class="order-track-text">
+                                    <span class="order-track-text-stat">Received</span>
+                                </div>
                             </div>
-
-                            <div class="col-md-4">
-                                <b>Ship to:</b>
-                                <br />
-                                <u>{{ order.transaction.nama }}</u>
-                                <br />
-                                {{ order.transaction.alamat }}
-                                <br />
-                                {{ order.transaction.provinsi_nama }}
-                                <br />
-                                {{ order.transaction.kota_nama }}
-                                <br />
-                                {{ order.transaction.kecamatan_nama }}
-                                <br />
-                                {{ order.transaction.kode_pos }}
-                                <br />
+                            <div class="order-track-step disabled">
+                                <div class="order-track-status">
+                                    <span class="order-track-status-dot"></span>
+                                    <span class="order-track-status-line"></span>
+                                </div>
+                                <div class="order-track-text">
+                                    <span class="order-track-text-stat">Shipped</span>
+                                    <span class="order-track-text-sub">
+                                        No. resi
+                                        <b>{{ (order.transaction.resi ? order.transaction.resi : '-') }}</b>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <b>Grand Total:</b>
-                                <br />
-                                {{ order.transaction.grand_total | rupiah }}
-                                <br />
-                                <br />
-                                <b>Unique Code:</b>
-                                <br />
-                                {{ order.transaction.kode_unik_transfer }}
-                                <br />
-                                <br />
-                                <b>No. Resi:</b>
-                                <br />
-                                {{ (order.transaction.resi ? order.transaction.resi : '-') }}
+                            <div class="order-track-step disabled">
+                                <div class="order-track-status">
+                                    <span class="order-track-status-dot"></span>
+                                    <span class="order-track-status-line"></span>
+                                </div>
+                                <div class="order-track-text">
+                                    <span class="order-track-text-stat">Packed</span>
+                                </div>
+                            </div>
+                            <div class="order-track-step disabled">
+                                <div class="order-track-status">
+                                    <span class="order-track-status-dot"></span>
+                                    <span class="order-track-status-line"></span>
+                                </div>
+                                <div class="order-track-text">
+                                    <span class="order-track-text-stat">Payment Confirmed</span>
+                                </div>
+                            </div>
+                            <div class="order-track-step disabled">
+                                <div class="order-track-status">
+                                    <span class="order-track-status-dot"></span>
+                                    <span class="order-track-status-line"></span>
+                                </div>
+                                <div class="order-track-text">
+                                    <span class="order-track-text-stat">Tranfered</span>
+                                </div>
+                            </div>
+                            <div class="order-track-step">
+                                <div class="order-track-status">
+                                    <span class="order-track-status-dot"></span>
+                                    <span class="order-track-status-line"></span>
+                                </div>
+                                <div class="order-track-text">
+                                    <span class="order-track-text-stat">Place Order</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
-                <hr />
             </div>
-        </li>
-    </ul>
+        </div>
+    </div>
 </template>
 
 <script>
