@@ -451,11 +451,13 @@
                                             style="padding:10px;padding-bottom: 15px;"
                                             :key="product.kode_barang"
                                         >
-                                            <div
+                                            <nuxt-link
+                                                tag="div"
+                                                :to="`/products/${product.kode_barang}/detail`"
                                                 class="product-inner equal-element"
                                                 style="border-radius: 6px;border:none;"
                                             >
-                                                <div class="product-top">
+                                                <!-- <div class="product-top">
                                                     <div class="flash">
                                                         <span class="onnew">
                                                             <span class="text">new</span>
@@ -466,16 +468,14 @@
                                                             <a href="#" tabindex="0">Add to Wishlist</a>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="product-thumb">
                                                     <div class="thumb-inner">
-                                                        <a href="#">
-                                                            <img
-                                                                :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${product.pic}.jpg`"
-                                                                :alt="product.nama"
-                                                                style="display: unset;"
-                                                            />
-                                                        </a>
+                                                        <img
+                                                            :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${product.pic}.jpg`"
+                                                            :alt="product.nama"
+                                                            style="display: unset;"
+                                                        />
                                                     </div>
                                                 </div>
                                                 <div class="text-center">
@@ -486,26 +486,28 @@
                                                         <a href="#">{{ product.nama }}</a>
                                                     </h5>
                                                     <div class="group-info">
-                                                        <div
+                                                        <div v-if="product.harga_diskon > 0 && product.harga > product.harga_diskon"
+                                                            class="price text-center"
+                                                            style="display:flex;flex-direction:column"
+                                                        >
+                                                            <del
+                                                                style="margin-right: 0px;"
+                                                            >{{ product.harga | rupiah }}</del>
+                                                            <ins
+                                                                style="margin-bottom: 8px"
+                                                            >{{ product.harga | rupiah }}</ins>
+                                                        </div>
+                                                        <div v-else
                                                             class="price text-center"
                                                             style="display:flex;flex-direction:column"
                                                         >
                                                             <ins
                                                                 style="margin-bottom: 8px"
                                                             >{{ product.harga | rupiah }}</ins>
-                                                            <del
-                                                                style="margin-right: 0px;"
-                                                            >{{ product.harga | rupiah }}</del>
                                                         </div>
                                                     </div>
-                                                    <div class="button-view-product">
-                                                        <button
-                                                            class="single_add_to_cart_button button"
-                                                            tabindex="0"
-                                                        >View Product</button>
-                                                    </div>
                                                 </div>
-                                            </div>
+                                            </nuxt-link>
                                         </div>
                                     </slick>
                                 </div>
@@ -648,7 +650,7 @@ export default {
                 )
                 .then((response) => {
                     if (response.data.data != 0) {
-                        this.related_products = response.data.data.slice(0, 1)
+                        this.related_products = response.data.data
                         // this.complete = true;
                         this.reInit()
                     }

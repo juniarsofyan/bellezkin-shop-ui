@@ -192,10 +192,6 @@
                                                         value="Login"
                                                         @click="auth0Login()"
                                                     />
-                                                    <button
-                                                        class="button btn-outline"
-                                                        @click="auth0Login()"
-                                                    >Register</button>
                                                 </div>
                                             </div>
                                         </div>
