@@ -219,6 +219,10 @@ export default {
         {
             src: '~/plugins/swiper.js',
             ssr: true
+        },
+        {
+            src: '~/plugins/feathericons.js',
+            ssr: false
         }
     ],
     /*

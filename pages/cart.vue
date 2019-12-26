@@ -66,7 +66,7 @@
                                                 <div>Grand Total</div>
                                                 <div
                                                     class="cart-total-value"
-                                                >{{ subtotal | rupiah }}</div>
+                                                >{{ grand_total | rupiah }}</div>
                                             </div>
                                         </div>
                                         <div class="control-cart">
@@ -76,18 +76,13 @@
                                             class="button btn-continue-shopping"
                                             >CONTINUE SHOPPING</nuxt-link>-->
 
-                                            <!-- <button
+                                            <button
                                                 v-if="!userIsAuthorized"
                                                 @click="warnSignIn"
                                                 class="button button-checkout btn-cart-to-checkout"
                                             >CHECKOUT NOW</button>
                                             <nuxt-link
                                                 v-else
-                                                :to="`/checkout`"
-                                                tag="button"
-                                                class="button button-checkout btn-cart-to-checkout"
-                                            >CHECKOUT NOW</nuxt-link>-->
-                                            <nuxt-link
                                                 :to="`/checkout`"
                                                 tag="button"
                                                 class="button button-checkout btn-cart-to-checkout"
@@ -120,18 +115,17 @@ export default {
     },
     computed: {
         ...mapGetters('authentication', ['userIsAuthorized']),
-        items: function() {
-            return this.$store.getters['cart/items']
-        },
-        subtotal: function() {
-            return this.$store.getters['cart/subtotal']
-        }
+        ...mapGetters('cart', [
+            'items',
+            'subtotal',
+            'grand_total'
+        ])
     },
     methods: {
         warnSignIn() {
             this.$swal({
                 title: 'Oops!',
-                text: 'Please sign in to continue',
+                text: 'Please sign in to checkout',
                 type: 'warning'
             }).then(() => {
                 this.$store.dispatch('authentication/auth0Login')
