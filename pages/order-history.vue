@@ -1,9 +1,9 @@
 <template>
     <div>
         <div
-            class="list-order-history"
             v-for="order in order_histories"
             :key="order.transaction.transaksi_id"
+            class="list-order-history"
         >
             <div class="row">
                 <div class="col-md-12">
@@ -14,19 +14,32 @@
                         <thead>
                             <tr>
                                 <th>Item</th>
-                                <th>Qty</th>
-                                <th>Price</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="item in order.items" :key="item.kode_barang">
                                 <td class="item-order">
-                                    <img
-                                        :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${item.pic}.jpg`"
-                                    />
-                                    {{ item.nama }}
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img
+                                                :src="
+                                                    `${$axios.defaults.baseURL}assets/img/thumbnails/${item.pic}.jpg`
+                                                "
+                                            />
+                                        </div>
+                                        <div class="col-md-10">
+                                            {{ item.nama }}
+                                            <div>
+                                                <div
+                                                    style="text-decoration: line-through;"
+                                                >IDR 800.000</div>
+                                                <span>{{ item.qty }}x</span>
+                                                <span>IDR 800.000</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td>{{ item.qty }}x</td>
                                 <td>IDR 800.000</td>
                             </tr>
                         </tbody>
@@ -35,31 +48,52 @@
                                 <td></td>
                             </tr>-->
                             <tr>
-                                <td colspan="2" align="right">
+                                <td colspan align="right">
                                     <b>Subtotal</b>
                                 </td>
                                 <td>
-                                    <b>{{ order.transaction.grand_total | rupiah }}</b>
+                                    <b>
+                                        {{
+                                        order.transaction.grand_total
+                                        | rupiah
+                                        }}
+                                    </b>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" align="right">
+                                <td colspan align="right">
                                     <b>Unique Code</b>
                                 </td>
                                 <td>
-                                    <b>{{ order.transaction.kode_unik_transfer | rupiah }}</b>
+                                    <b>
+                                        {{
+                                        order.transaction
+                                        .kode_unik_transfer | rupiah
+                                        }}
+                                    </b>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" align="right">
+                                <td colspan align="right">
                                     <b>Grand total</b>
                                 </td>
                                 <td>
-                                    <b>{{ order.transaction.grand_total | rupiah }}</b>
+                                    <b>
+                                        {{
+                                        order.transaction.grand_total
+                                        | rupiah
+                                        }}
+                                    </b>
                                 </td>
                             </tr>
                         </tfoot>
                     </table>
+                    <div class="row" style="margin-bottom:1em">
+                        <div class="col-md-12">
+                            <b>SPB:</b>
+                            <br />Bandung, Lengkong
+                        </div>
+                    </div>
                     <div class="row section-desc-order">
                         <div class="col-md-9">
                             <b>Ship to:</b>
@@ -68,7 +102,9 @@
                             <br />
                             {{ order.transaction.alamat }}
                             <br />
-                            {{ order.transaction.provinsi_nama }}, {{ order.transaction.kota_nama }} Kec. {{ order.transaction.kecamatan_nama }}
+                            {{ order.transaction.provinsi_nama }},
+                            {{ order.transaction.kota_nama }} Kec.
+                            {{ order.transaction.kecamatan_nama }}
                             <br />
                             {{ order.transaction.kode_pos }}
                             <br />
@@ -82,15 +118,24 @@
                         >
                             <div>
                                 <button
-                                    class="btn btn-link"
                                     v-if="!hasShipped(order.progresses)"
-                                    @click="deleteTransaction(order.transaction.transaksi_id)"
+                                    @click="
+                                        deleteTransaction(
+                                            order.transaction.transaksi_id
+                                        )
+                                    "
+                                    class="btn btn-link"
                                 >Cancel Order</button>
                             </div>
                             <button
-                                class="btn btn-success"
                                 v-if="!hasbeenTransferred(order.progresses)"
-                                @click="confirmPayment(order.transaction.transaksi_id, order.transaction.nomor_transaksi)"
+                                @click="
+                                    confirmPayment(
+                                        order.transaction.transaksi_id,
+                                        order.transaction.nomor_transaksi
+                                    )
+                                "
+                                class="btn btn-success"
                             >Confirm payment</button>
                         </div>
                     </div>
@@ -123,7 +168,13 @@
                                     <span class="order-track-text-stat">Shipped</span>
                                     <span class="order-track-text-sub">
                                         No. resi
-                                        <b>{{ (order.transaction.resi ? order.transaction.resi : '-') }}</b>
+                                        <b>
+                                            {{
+                                            order.transaction.resi
+                                            ? order.transaction.resi
+                                            : '-'
+                                            }}
+                                        </b>
                                     </span>
                                 </div>
                             </div>
@@ -186,8 +237,11 @@ export default {
             order_items: []
         }
     },
+    created() {
+        this.getOrderHistory()
+    },
     methods: {
-        getOrderHistory: function() {
+        getOrderHistory() {
             const user_data = JSON.parse(localStorage.getItem('user_data'))
 
             this.$axios
@@ -196,7 +250,7 @@ export default {
                 })
                 .then((response) => {
                     if (response.data.data != 0) {
-                        let result = response.data.data
+                        const result = response.data.data
                         this.order_histories = result
                     }
                 })
@@ -204,7 +258,7 @@ export default {
                     console.log(e)
                 })
         },
-        confirmPayment: function(transaction_id, transaction_number) {
+        confirmPayment(transaction_id, transaction_number) {
             this.$swal({
                 title: 'Confirm payment',
                 text: 'Have you made the payment?',
@@ -272,7 +326,7 @@ export default {
                 (element) => element.keterangan == 'SHIPPED'
             )
         },
-        deleteTransaction: function(transaction_id) {
+        deleteTransaction(transaction_id) {
             this.$swal({
                 title: 'Cancelation Confirmation',
                 text: 'Arey you sure want to cancel this transaction?',
@@ -324,9 +378,6 @@ export default {
                 }
             })
         }
-    },
-    created() {
-        this.getOrderHistory()
     }
 }
 </script>
