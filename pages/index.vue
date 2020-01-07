@@ -80,7 +80,6 @@ import axios from 'axios'
 
 export default {
     layout: 'products',
-    // middleware: 'check-previous-route',
     components: {
         // SlideBanner: () => import('~/components/SlideBanner'),
         Product: () => import('~/components/Product'),

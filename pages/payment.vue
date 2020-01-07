@@ -134,8 +134,8 @@
 import { mapGetters, mapActions } from 'vuex'
 	
 export default {
-    // middleware: ['traffics'],
     layout: 'products',
+    middleware: ['authorization', 'cartvalidation', 'checkoutvalidation'],
 	data() {
 		return {
 			bank: false,
@@ -255,31 +255,29 @@ export default {
                     note: "",
 				}
 				
-				// console.log(transaction_master)
-
                 this.$axios.post(`transaction/add`, {
-                        transaction: transaction_master,
-                    })
-                    .then(response => {
-                        if (response.data.data == 1) {
-                            this.$swal({
-                                // title: "",
-                                text: "Transaction saved!",
-                                type: "success",
-                            }).then(() => {
+                    transaction: transaction_master,
+                })
+                .then(response => {
+                    if (response.data.data == 1) {
+                        this.$swal({
+                            // title: "",
+                            text: "Transaction saved!",
+                            type: "success",
+                        }).then(() => {
 
-                                this.$store.dispatch('cart/reset')
-                                this.$store.dispatch('checkout/reset')
+                            this.$store.dispatch('cart/reset')
+                            this.$store.dispatch('checkout/reset')
 
-                                this.$router.push({
-                                    name: "transaction-complete",
-                                })
+                            this.$router.push({
+                                name: "transaction-complete",
                             })
-                        }
-                    })
-                    .catch(e => {
-                        console.log(e)
-                    })
+                        })
+                    }
+                })
+                .catch(e => {
+                    console.log(e)
+                })
             }
         }
 	},

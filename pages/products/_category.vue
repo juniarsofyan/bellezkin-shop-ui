@@ -23,7 +23,9 @@
                     </template>
                     <template  v-else>
                         <div class="text-center">
-                            <h4 class="text-muted" style="margin:50px 0px 50px 0px;">Oops!...No products available</h4>
+                            <img src="~/assets/images/svg/no-data.svg" style="width:200px;" /><br/><br/>
+                                <b><h3>Oops...</h3></b>
+                                Product not found
                         </div>
                     </template>
                 </ul>
@@ -88,9 +90,7 @@ export default {
     head() {
         return {
             bodyAttrs: {
-                class: this.dataLoaded
-                    ? 'home-page home page page-id-4 page-template page-template-template-homepage page-template-template-homepage-php'
-                    : ''
+                class: this.dataLoaded ? 'home-page home page page-id-4 page-template page-template-template-homepage page-template-template-homepage-php' : ''
             }
         }
     },
