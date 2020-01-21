@@ -17,8 +17,8 @@
                 <div class="cart-info-wrap">
                     <div class="flex-cart-item">
                         <div v-if="item.price_discount > 0 && item.price > item.price_discount">
-                            <div class="cart-product-price-disc">{{ item.price_discount | rupiah }}</div>
-                            <div class="cart-product-price">{{ item.price | rupiah }}</div>
+                            <div class="cart-product-price-disc">{{ item.price | rupiah }}</div>
+                            <div class="cart-product-price">{{ item.price_discount | rupiah }}</div>
                         </div>
                         <div v-else>
                             <div class="cart-product-price">{{ item.price | rupiah }}</div>
@@ -93,11 +93,9 @@ export default {
     color: #111;
     font-weight: 700;
 }
-
 .cart-form .shop_table .product-quantity {
     width: 15%;
 }
-
 .cart-form .shop_table .product-name {
     font-weight: 600;
     color: #333333;

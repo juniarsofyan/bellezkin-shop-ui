@@ -78,20 +78,28 @@
                                                                 tag="a"
                                                             >{{ item.product_name }}</nuxt-link>
                                                         </h5>
-                                                        <div class="variations">
-                                                            <span class="attribute_color">
-                                                                <nuxt-link
-                                                                    :to="`/products/${item.category}`"
-                                                                    tag="a"
-                                                                >{{ item.category }}</nuxt-link>
+
+                                                        <template v-if="item.price_discount > 0 && item.price > item.price_discount">    
+                                                            <div class="variations">
+                                                                <span class="attribute_color">
+                                                                    <del>{{ item.price | rupiah }}</del>
+                                                                </span>
+                                                            </div>
+                                                            <span class="product-price">
+                                                                <span class="price">
+                                                                    <span>{{ item.price_discount | rupiah }}</span>
+                                                                </span>
                                                             </span>
-                                                            <!-- ,<span class="attribute_size"><a href="#">300ml</a></span> -->
-                                                        </div>
-                                                        <span class="product-price">
-                                                            <span class="price">
-                                                                <span>{{ item.price | rupiah }}</span>
+                                                        </template>
+                                                        <template v-else>
+                                                            <span class="product-price">
+                                                                <span class="price">
+                                                                    <span>{{ item.price_discount | rupiah }}</span>
+                                                                </span>
                                                             </span>
-                                                        </span>
+                                                        </template>
+
+
                                                         <span
                                                             class="product-quantity"
                                                         >x {{ item.qty }}</span>
@@ -128,7 +136,7 @@
                                                     tag="a"
                                                     class="button botton-toolcart btn-cart"
                                                 >
-                                                    <span>Checkout Now</span>
+                                                    <span>View My Cart</span>
                                                 </nuxt-link>
                                             </div>
                                         </div>
@@ -267,7 +275,6 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-
 export default {
     data() {
         return {
@@ -326,6 +333,7 @@ export default {
             this.$store.dispatch('authentication/auth0Logout')
             this.$store.dispatch('checkout/reset')
             this.$store.dispatch('cart/reset')
+            this.$cookies.remove('key')
         }
     }
 }
@@ -343,26 +351,21 @@ export default {
     font-size: 14px;
     border-radius: 4px;
 }
-
 .submenu-profile {
     padding-left: 0px;
 }
-
 .menu-item {
     list-style: none;
     position: relative;
 }
-
 .submenu > li a {
     display: block;
     padding: 11px 20px;
     color: #555555;
 }
-
 .submenu > li a > i {
     padding-right: 6px;
 }
-
 .submenu > li:hover {
     background-color: #f1f1f1;
 }

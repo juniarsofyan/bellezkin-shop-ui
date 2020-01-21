@@ -41,17 +41,7 @@
                     <!-- media box -->
                     <div class="details-product single-product-galery">
                         <div class="details-thumd">
-                            <div
-                                class="image-preview-container image-thick-box image_preview_container"
-                            >
-                                <img
-                                    id="img_zoom"
-                                    :data-zoom-image="`${$axios.defaults.baseURL}assets/img/products/${product.pic}.jpg`"
-                                    :src="`${$axios.defaults.baseURL}assets/img/products/${product.pic}.jpg`"
-                                    alt
-                                />
-                            </div>
-                            <div class="product_preview image-small"></div>
+							<img :src="`${$axios.defaults.baseURL}assets/img/products/${product.pic}.jpg`" />
                         </div>
                         <div class="details-infor">
                             <h1 class="product-title">{{ product.nama }}</h1>
@@ -59,7 +49,11 @@
                                 Product Code:
                                 <a href="#">{{ product.kode_barang }}</a>
                             </div>
-                            <div class="price">
+                            <div class="price" v-if="product.harga_diskon > 0 && product.harga > product.harga_diskon">
+                                <span class="old-price"><small>{{ product.harga | rupiah }}</small></span><br/>
+                                <span>{{ product.harga_diskon | rupiah }}</span>
+                            </div>
+                            <div class="price" v-else>
                                 <span>{{ product.harga | rupiah }}</span>
                             </div>
                             <div class="product-details-description">
@@ -451,59 +445,32 @@
                                             style="padding:10px;padding-bottom: 15px;"
                                             :key="product.kode_barang"
                                         >
-                                            <nuxt-link
-                                                tag="div"
-                                                :to="`/products/${product.kode_barang}/detail`"
+                                            <nuxt-link tag="div" :to="`/products/${product.kode_barang}/detail`"
                                                 class="product-inner equal-element"
                                                 style="border-radius: 6px;border:none;"
                                             >
-                                                <!-- <div class="product-top">
-                                                    <div class="flash">
-                                                        <span class="onnew">
-                                                            <span class="text">new</span>
-                                                        </span>
-                                                    </div>
-                                                    <div class="yith-wcwl-add-to-wishlist">
-                                                        <div class="yith-wcwl-add-button">
-                                                            <a href="#" tabindex="0">Add to Wishlist</a>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
                                                 <div class="product-thumb">
                                                     <div class="thumb-inner">
-                                                        <img
-                                                            :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${product.pic}.jpg`"
-                                                            :alt="product.nama"
-                                                            style="display: unset;"
-                                                        />
+                                                        <a href="#">
+                                                            <img
+                                                                :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${product.pic}.jpg`"
+                                                                :alt="product.nama"
+                                                                style="display: unset;"
+                                                            />
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="text-center">
                                                     <h5
                                                         class="product-name product_title"
-                                                        style="height: 44px; overflow: hidden;margin-bottom: 14px;"
+                                                        style="height: 44px; overflow: hidden;"
                                                     >
                                                         <a href="#">{{ product.nama }}</a>
                                                     </h5>
                                                     <div class="group-info">
-                                                        <div v-if="product.harga_diskon > 0 && product.harga > product.harga_diskon"
-                                                            class="price text-center"
-                                                            style="display:flex;flex-direction:column"
-                                                        >
-                                                            <del
-                                                                style="margin-right: 0px;"
-                                                            >{{ product.harga | rupiah }}</del>
-                                                            <ins
-                                                                style="margin-bottom: 8px"
-                                                            >{{ product.harga | rupiah }}</ins>
-                                                        </div>
-                                                        <div v-else
-                                                            class="price text-center"
-                                                            style="display:flex;flex-direction:column"
-                                                        >
-                                                            <ins
-                                                                style="margin-bottom: 8px"
-                                                            >{{ product.harga | rupiah }}</ins>
+                                                        <div class="price">
+                                                            <!-- <del>€65</del> -->
+                                                            <ins>{{ product.harga | rupiah }}</ins>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -521,181 +488,183 @@
 </template>
 
 <script>
-import axios from 'axios'
+	import axios from 'axios'
 
-export default {
-    layout: 'product',
-    components: {
-        // RelatedProducts: () => import('~/components/RelatedProducts')
-    },
-    data() {
-        return {
-            dataLoaded: false,
-            code: this.$route.params.code,
-            product: [],
-            related_products: [],
-            qty: 1,
-            url: document.URL,
-            slickOptions: {
-                infinite: false,
-                dots: false,
-                autoplay: true,
-                arrows: false,
-                prevArrow: '<small> < </small>',
-                nextArrow: '<small> > </small>',
-                responsive: [
-                    {
-                        breakpoint: 5121,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 2561,
-                        settings: {
-                            slidesToShow: 4,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 1441,
-                        settings: {
-                            slidesToShow: 4,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 1154,
-                        settings: {
-                            slidesToShow: 4,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 1025,
-                        settings: {
-                            slidesToShow: 4,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 769,
-                        settings: {
-                            slidesToShow: 4,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 425,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 376,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                ]
-            }
-        }
-    },
-    head() {
-        return {
-            bodyAttrs: {
-                class: this.dataLoaded
-                    ? 'home-page home page page-id-4 page-template page-template-template-homepage page-template-template-homepage-php'
-                    : ''
-            }
-        }
-    },
-    watch: {
-        '$route.params.code': {
-            handler: function(code) {
-                this.getProductDetail(code)
-            },
-            deep: true,
-            immediate: true
-        }
-    },
-    computed: {
-        //   productTitle: function() {
-        //     return this.category.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}).replace(" ", "");
-        //   }
-    },
-    methods: {
-        getProductDetail(code) {
-            this.$axios
-                .get(`products/${code}/detail`)
-                .then((response) => {
-                    if (response.data.data != 0) {
-                        this.product = response.data.data
-                        this.getRelatedProducts()
-                        // this.getRelatedPromoItems()
-                        // this.getDiscountedItem()
-                    }
-                })
-                .catch((e) => {
-                    console.log(e)
-                })
-        },
-        getRelatedProducts() {
-            this.$axios
-                .get(
-                    `/products/${this.product.jenis}/related/${this.product.kode_barang}`
-                )
-                .then((response) => {
-                    if (response.data.data != 0) {
-                        this.related_products = response.data.data
-                        // this.complete = true;
-                        this.reInit()
-                    }
-                })
-                .catch((e) => {
-                    console.log(e)
-                })
-        },
-        addQty: function() {
-            this.qty++
-        },
-        minQty: function() {
-            if (this.qty > 1) {
-                this.qty--
-            }
-        },
-        addItem: function() {
-            this.product.qty = this.qty
-            this.$store.dispatch('cart/addItem', this.product)
-            this.qty = 1
-            this.$toast.global.cartadd({
-                message: `Added &nbsp; <b>${this.product.nama} (x${this.product.qty})</b>`
-            })
-        },
-        next() {
-            this.$refs.slick.next()
-        },
-        prev() {
-            this.$refs.slick.prev()
-        },
+	export default {
+		layout: 'product',
+		components: {
+			// RelatedProducts: () => import('~/components/RelatedProducts')
+		},
+		data() {
+			return {
+				dataLoaded: false,
+				code: this.$route.params.code,
+				product: [],
+				related_products: [],
+				qty: 1,
+				url: document.URL,
+				slickOptions: {
+					infinite: false,
+					dots: false,
+					autoplay: true,
+					arrows: false,
+					prevArrow: '<small> < </small>',
+					nextArrow: '<small> > </small>',
+					responsive: [{
+							breakpoint: 5121,
+							settings: {
+								slidesToShow: 3,
+								slidesToScroll: 1
+							}
+						},
+						{
+							breakpoint: 2561,
+							settings: {
+								slidesToShow: 3,
+								slidesToScroll: 1
+							}
+						},
+						{
+							breakpoint: 1441,
+							settings: {
+								slidesToShow: 3,
+								slidesToScroll: 1
+							}
+						},
+						{
+							breakpoint: 1154,
+							settings: {
+								slidesToShow: 3,
+								slidesToScroll: 1
+							}
+						},
+						{
+							breakpoint: 1025,
+							settings: {
+								slidesToShow: 3,
+								slidesToScroll: 1
+							}
+						},
+						{
+							breakpoint: 769,
+							settings: {
+								slidesToShow: 3,
+								slidesToScroll: 1
+							}
+						},
+						{
+							breakpoint: 425,
+							settings: {
+								slidesToShow: 3,
+								slidesToScroll: 1
+							}
+						},
+						{
+							breakpoint: 376,
+							settings: {
+								slidesToShow: 3
+							}
+						}
+					]
+				}
+			}
+		},
+		head() {
+			return {
+				bodyAttrs: {
+					class: this.dataLoaded ?
+						'home-page home page page-id-4 page-template page-template-template-homepage page-template-template-homepage-php' :
+						''
+				}
+			}
+		},
+		watch: {
+			'$route.params.code': {
+				handler: function (code) {
+					this.getProductDetail(code)
+				},
+				deep: true,
+				immediate: true
+			}
+		},
+		computed: {
+			//   productTitle: function() {
+			//     return this.category.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}).replace(" ", "");
+			//   }
+		},
+		methods: {
+			getProductDetail(code) {
+				this.$axios
+					.get(`products/${code}/detail`)
+					.then((response) => {
+						if (response.data.data != 0) {
+							this.product = response.data.data
+							this.getRelatedProducts()
+							// this.getRelatedPromoItems()
+							// this.getDiscountedItem()
+						}
+					})
+					.catch((e) => {
+						console.log(e)
+					})
+			},
+			getRelatedProducts() {
+				this.$axios
+					.get(
+						`/products/${this.product.jenis}/related/${this.product.kode_barang}`
+					)
+					.then((response) => {
+						if (response.data.data != 0) {
+							this.related_products = response.data.data
+							// this.complete = true;
+							this.reInit();
+						}
+					})
+					.catch((e) => {
+						console.log(e)
+					})
+			},
+			addQty: function () {
+				this.qty++
+			},
+			minQty: function () {
+				if (this.qty > 1) {
+					this.qty--
+				}
+			},
+			addItem: function () {
+				this.product.qty = this.qty
+				this.$store.dispatch('cart/addItem', this.product)
+				this.qty = 1
+				this.$toast.global.cartadd({ 
+                	message: `Added &nbsp; <b>${this.product.nama } (x${this.product.qty})</b>` 
+            	})
+			},
+			next() {
+				this.$refs.slick.next();
+			},
+			prev() {
+				this.$refs.slick.prev();
+			},
 
-        reInit() {
-            let currIndex = this.$refs.slick.currentSlide()
-            this.$refs.slick.destroy()
-            this.$nextTick(() => {
-                this.$refs.slick.create()
-                this.$refs.slick.goTo(currIndex, true)
-            })
-        }
-    }
-}
+			reInit() {
+				let currIndex = this.$refs.slick.currentSlide()
+				this.$refs.slick.destroy()
+				this.$nextTick(() => {
+					this.$refs.slick.create()
+					this.$refs.slick.goTo(currIndex, true)
+				})
+			},
+		}
+	}
 </script>
 
 <style>
-.custom_blog_title {
-    text-transform: captialize;
-}
+	.custom_blog_title {
+		text-transform: captialize;
+	}
+	.old-price {
+		text-decoration: line-through;
+		color: grey;
+	}
 </style>
