@@ -124,8 +124,6 @@ export default {
                             title: "Oops!",
                             text: "Receipt number not found",
                             type: "warning",
-                        }).then(() => {
-                            this.$store.dispatch("authentication/auth0Login")
                         })
                     }
                 })

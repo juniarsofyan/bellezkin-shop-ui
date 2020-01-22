@@ -29,10 +29,6 @@ const authentication = {
             state.user_data = replacement
             localStorage.setItem('user_data', JSON.stringify(replacement))
         },
-        setUserData(state, replacement) {
-            state.user_data = replacement
-            localStorage.setItem('user_data', JSON.stringify(replacement))
-        },
         setEmail(state, replacement) {
             state.email = replacement
             localStorage.setItem('email', replacement)

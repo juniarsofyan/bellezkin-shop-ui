@@ -40,6 +40,8 @@
                         />
                     </template>
                 </ul>
+
+                <!--shop title-->
                 <nuxt-link to="/products/decorative" tag="h3" class="custom_blog_title">
                     <a href="#">#Decorative</a>
                 </nuxt-link>
@@ -81,7 +83,6 @@ import axios from 'axios'
 export default {
     layout: 'products',
     components: {
-        // SlideBanner: () => import('~/components/SlideBanner'),
         Product: () => import('~/components/Product'),
         Banner: () => import('~/components/Banner')
     },
@@ -133,13 +134,6 @@ export default {
                 this.extracares = response.data.data
             }
         })
-
-        /* this.$axios.get(process.env.API_BASE_URL + 'products/product-codes').then((res) => {
-            let urls = res.data.data.map((product) => {
-                return `products/${product.kode_barang}/detail`
-            })
-            console.log(urls)
-        }) */
     }
 }
 </script>
